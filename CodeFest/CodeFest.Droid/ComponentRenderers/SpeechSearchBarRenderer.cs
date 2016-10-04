@@ -1,6 +1,10 @@
-﻿using Android.App;
+﻿using System;
+using Android.App;
 using Android.Content;
+using Android.Runtime;
+using Android.Text;
 using Android.Views;
+using Android.Views.InputMethods;
 using Android.Widget;
 using CodeFest.Components;
 using CodeFest.Droid.ComponentRenderers;
@@ -11,16 +15,45 @@ using Xamarin.Forms.Platform.Android;
 [assembly: ExportRenderer(typeof(SpeechSearchBar), typeof(SpeechSearchBarRenderer))]
 namespace CodeFest.Droid.ComponentRenderers
 {
-    class SpeechSearchBarRenderer : ViewRenderer
+    class SpeechSearchBarRenderer : ViewRenderer<SpeechSearchBar, SearchView>, ITextWatcher, INoCopySpan, IJavaObject, IDisposable, SearchView.IOnQueryTextListener
     {
-        protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.View> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<SpeechSearchBar> elementChangedEventArgs)
         {
             var control = LayoutInflater.From(Forms.Context).Inflate(Resource.Layout.SpeechSearchView, null, false);
             var searchView = (SearchView) control.FindViewById(Resource.Id.query);
+            searchView.RemoveFromParent();
+            searchView.SetOnQueryTextListener(this);
             var text = searchView.FindViewById(Resource.Id.search_src_text);
             var searchableInfo = SearchManager.FromContext(Context).GetSearchableInfo(new ComponentName(Context, Class.FromType(typeof(ClientProvider))));
             searchView.SetSearchableInfo(searchableInfo);
-            SetNativeControl(control);
+            SetNativeControl(searchView);
+        }
+
+        public void AfterTextChanged(IEditable s)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void BeforeTextChanged(ICharSequence s, int start, int count, int after)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnTextChanged(ICharSequence s, int start, int before, int count)
+        {
+        }
+
+        public bool OnQueryTextChange(string newText)
+        {
+            if (string.IsNullOrEmpty(this.Element.Text) && string.IsNullOrEmpty(newText))
+                return false;
+            this.Element.SetValue(SearchBar.TextProperty, (object)newText);
+            return true;
+        }
+
+        public bool OnQueryTextSubmit(string query)
+        {
+            throw new NotImplementedException();
         }
     }
 }
