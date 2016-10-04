@@ -9,5 +9,12 @@ namespace CodeFest.Components
 {
     public class SpeechSearchBar : SearchBar
     {
+        public SpeechSearchBar()
+        {
+            TextChanged += (sender, args) =>
+            {
+                
+            };
+        }
     }
 }

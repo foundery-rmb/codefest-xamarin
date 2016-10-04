@@ -17,6 +17,7 @@ namespace CodeFest.Droid.ComponentRenderers
         {
             var control = LayoutInflater.From(Forms.Context).Inflate(Resource.Layout.SpeechSearchView, null, false);
             var searchView = (SearchView) control.FindViewById(Resource.Id.query);
+            var text = searchView.FindViewById(Resource.Id.search_src_text);
             var searchableInfo = SearchManager.FromContext(Context).GetSearchableInfo(new ComponentName(Context, Class.FromType(typeof(ClientProvider))));
             searchView.SetSearchableInfo(searchableInfo);
             SetNativeControl(control);

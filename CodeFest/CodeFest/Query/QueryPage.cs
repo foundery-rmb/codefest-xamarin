@@ -17,16 +17,23 @@ namespace CodeFest.Query
         {
             _label = new Label
             {
-                HorizontalTextAlignment = TextAlignment.Center
+                TextColor = Color.Black,
+                HorizontalTextAlignment = TextAlignment.Center,
+                VerticalTextAlignment = TextAlignment.Center
+            };
+            var speechSearchBar = new SpeechSearchBar
+            {
+                Placeholder = "Query"
+            };
+            speechSearchBar.TextChanged += (sender, args) =>
+            {
+                _label.Text = args.NewTextValue;
             };
             Content = new StackLayout
             {
                 Children = {
                     _label,
-                    new SpeechSearchBar
-                    {
-                        Placeholder = "Query"
-                    }
+                    speechSearchBar
                 }
             };
         }
