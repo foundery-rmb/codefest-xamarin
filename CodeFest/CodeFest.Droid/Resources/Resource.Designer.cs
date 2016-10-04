@@ -4418,6 +4418,9 @@ namespace CodeFest.Droid
 			// aapt resource value: 0x7f070007
 			public const int progress_horizontal = 2131165191;
 			
+			// aapt resource value: 0x7f07009d
+			public const int query = 2131165341;
+			
 			// aapt resource value: 0x7f070054
 			public const int radio = 2131165268;
 			
@@ -4824,10 +4827,13 @@ namespace CodeFest.Droid
 			public const int select_dialog_singlechoice_material = 2130903098;
 			
 			// aapt resource value: 0x7f03003b
-			public const int support_simple_spinner_dropdown_item = 2130903099;
+			public const int SpeechSearchView = 2130903099;
 			
 			// aapt resource value: 0x7f03003c
-			public const int week = 2130903100;
+			public const int support_simple_spinner_dropdown_item = 2130903100;
+			
+			// aapt resource value: 0x7f03003d
+			public const int week = 2130903101;
 			
 			static Layout()
 			{
