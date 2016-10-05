@@ -13,8 +13,8 @@ namespace CodeFest.Components
                 ColumnDefinitions = new ColumnDefinitionCollection { new ColumnDefinition(), new ColumnDefinition() }
             };
             grid.Children.Add(new Label { Text = "FSP No" }, 0, 0);
-            grid.Children.Add(new Label { Text = "12345", HorizontalTextAlignment = TextAlignment.Center }, 0, 1);
-            grid.Children.Add(new Label { Text = "Risk" }, 1, 0);
+            grid.Children.Add(new Label { Text = "12345", HorizontalTextAlignment = TextAlignment.Center }, 1, 0);
+            grid.Children.Add(new Label { Text = "Risk" }, 0, 1);
             grid.Children.Add(new Label { Text = "Low", TextColor = Color.Green, HorizontalTextAlignment = TextAlignment.Center }, 1, 1);
             Content = new Frame
             {

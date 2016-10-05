@@ -23,9 +23,9 @@ namespace CodeFest.Droid.ComponentRenderers
             var searchView = (SearchView) control.FindViewById(Resource.Id.query);
             searchView.RemoveFromParent();
             searchView.SetOnQueryTextListener(this);
-            var searchableInfo = SearchManager.FromContext(Context).GetSearchableInfo(new ComponentName(Context, Class.FromType(typeof(ClientProvider))));
-            
-            searchView.SetSearchableInfo(searchableInfo);
+//            var searchableInfo = SearchManager.FromContext(Context).GetSearchableInfo(new ComponentName(Context, Class.FromType(typeof(ClientProvider))));
+//            
+//            searchView.SetSearchableInfo(searchableInfo);
             SetNativeControl(searchView);
         }
 
