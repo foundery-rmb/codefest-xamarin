@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Components\ClientProfile.cs" />
+    <Compile Include="Components\NativeClientProfile.cs" />
     <Compile Include="Components\SpeechSearchBar.cs" />
     <Compile Include="PingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -10,21 +10,23 @@ using Android.Runtime;
 using Android.Support.V7.Widget;
 using Android.Text;
 using Android.Views;
+using CodeFest;
 using CodeFest.Components;
+using CodeFest.Droid.ComponentRenderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-using SearchView = Android.Widget.SearchView;
 
+[assembly: ExportRenderer(typeof(NativeClientProfile), typeof(ClientProfileRenderer))]
 namespace CodeFest.Droid.ComponentRenderers
 {
-    class ClientProfileRenderer : ViewRenderer<ClientProfile, CardView>, INoCopySpan, IJavaObject, IDisposable
+    class ClientProfileRenderer : ViewRenderer<NativeClientProfile, CardView>, INoCopySpan
     {
-        public ClientProfileRenderer()
+        protected override void OnElementChanged(ElementChangedEventArgs<NativeClientProfile> elementChangedEventArgs)
         {
-            var control = LayoutInflater.From(Forms.Context).Inflate(Resource.Layout.ClientProfile, null, false);
-            var clientProfileView = control.FindViewById<CardView>(Resource.Id.clientProfileCard);
-
-            SetNativeControl(clientProfileView);
+            var view = (CardView)LayoutInflater.From(Forms.Context).Inflate(Resource.Layout.ClientProfile, null, false);
+//            var clientProfileView = view.FindViewById<CardView>(Resource.Id.clientProfileCard);
+            //clientProfileView.RemoveFromParent();
+            SetNativeControl(view);
         }
     }
 }

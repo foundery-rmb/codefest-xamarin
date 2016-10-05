@@ -1,21 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
-namespace CodeFest
+namespace CodeFest.Components
 {
-    public class ClientProfile : Frame
+    internal class ClientProfile : ContentView
     {
         public ClientProfile()
         {
-            Content = new StackLayout
+            Padding = new Thickness(8, 1);
+            Content = new Frame
             {
-                Children =
-                { 
-                    new Label {Text = "Hello"}
+                OutlineColor = Color.Black,
+                HasShadow = true,
+                Content = new StackLayout
+                {
+                    Children =
+                    {
+                        new Label
+                        {
+                            Text = "Allan Gray",
+                            HorizontalTextAlignment = TextAlignment.Center,
+                            FontSize = 30,
+                            FontAttributes = FontAttributes.Bold
+                        },
+                        new AbsoluteLayout
+                        {
+                            Children = { new Label { Text = "FSP No" }, new Label { Text = "12345" } }
+                        }
+                    }
                 }
             };
         }
