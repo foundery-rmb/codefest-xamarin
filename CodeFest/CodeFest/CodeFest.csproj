@@ -36,10 +36,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Components\ClientProfile.cs" />
     <Compile Include="Components\SpeechSearchBar.cs" />
     <Compile Include="PingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\QueryPage.cs" />
+    <Compile Include="ResultPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GettingStarted.Xamarin" />

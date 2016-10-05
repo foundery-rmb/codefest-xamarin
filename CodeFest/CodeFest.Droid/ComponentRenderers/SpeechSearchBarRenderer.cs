@@ -15,7 +15,7 @@ using Xamarin.Forms.Platform.Android;
 [assembly: ExportRenderer(typeof(SpeechSearchBar), typeof(SpeechSearchBarRenderer))]
 namespace CodeFest.Droid.ComponentRenderers
 {
-    class SpeechSearchBarRenderer : ViewRenderer<SpeechSearchBar, SearchView>, ITextWatcher, INoCopySpan, IJavaObject, IDisposable, SearchView.IOnQueryTextListener
+    class SpeechSearchBarRenderer : ViewRenderer<SpeechSearchBar, SearchView>, INoCopySpan, IJavaObject, IDisposable, SearchView.IOnQueryTextListener
     {
         protected override void OnElementChanged(ElementChangedEventArgs<SpeechSearchBar> elementChangedEventArgs)
         {
@@ -23,24 +23,10 @@ namespace CodeFest.Droid.ComponentRenderers
             var searchView = (SearchView) control.FindViewById(Resource.Id.query);
             searchView.RemoveFromParent();
             searchView.SetOnQueryTextListener(this);
-            var text = searchView.FindViewById(Resource.Id.search_src_text);
             var searchableInfo = SearchManager.FromContext(Context).GetSearchableInfo(new ComponentName(Context, Class.FromType(typeof(ClientProvider))));
+            
             searchView.SetSearchableInfo(searchableInfo);
             SetNativeControl(searchView);
-        }
-
-        public void AfterTextChanged(IEditable s)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void BeforeTextChanged(ICharSequence s, int start, int count, int after)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnTextChanged(ICharSequence s, int start, int before, int count)
-        {
         }
 
         public bool OnQueryTextChange(string newText)
@@ -53,7 +39,8 @@ namespace CodeFest.Droid.ComponentRenderers
 
         public bool OnQueryTextSubmit(string query)
         {
-            throw new NotImplementedException();
+            ((ISearchBarController)this.Element).OnSearchButtonPressed();
+            return true;
         }
     }
 }

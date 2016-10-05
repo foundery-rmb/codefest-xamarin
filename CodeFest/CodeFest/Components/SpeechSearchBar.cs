@@ -11,10 +11,6 @@ namespace CodeFest.Components
     {
         public SpeechSearchBar()
         {
-            TextChanged += (sender, args) =>
-            {
-                
-            };
         }
     }
 }

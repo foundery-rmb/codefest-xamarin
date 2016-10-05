@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -9,9 +10,10 @@ using Xamarin.Forms;
 
 namespace CodeFest.Query
 {
-    public class QueryPage : ContentPage
+    public class QueryPage : NavigationPage
     {
         private Label _label;
+        private ActivityIndicator _activityIndicator;
 
         public QueryPage()
         {
@@ -29,13 +31,26 @@ namespace CodeFest.Query
             {
                 _label.Text = args.NewTextValue;
             };
-            Content = new StackLayout
+            speechSearchBar.SearchButtonPressed += async (sender, args) =>
             {
-                Children = {
-                    _label,
-                    speechSearchBar
-                }
+                _activityIndicator.IsRunning = true;
+                await Task.Delay(2000);
+                _activityIndicator.IsRunning = false;
+                await Navigation.PushAsync(new ResultPage());
             };
+            _activityIndicator = new ActivityIndicator();
+            Navigation.PushAsync(new ContentPage
+            {
+                Content = new StackLayout
+                {
+                    Children =
+                    {
+                        _label,
+                        speechSearchBar,
+                        _activityIndicator
+                    }
+                }
+            });
         }
 
         protected override void OnAppearing()
