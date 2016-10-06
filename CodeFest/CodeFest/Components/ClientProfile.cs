@@ -35,15 +35,15 @@ namespace CodeFest.Components
             var clientDetailsGrid = new Grid
             {
                 RowDefinitions = new RowDefinitionCollection {new RowDefinition()},
-                ColumnDefinitions = new ColumnDefinitionCollection {new ColumnDefinition(), new ColumnDefinition()}
+                ColumnDefinitions = new ColumnDefinitionCollection {new ColumnDefinition()}
             };
             clientDetailsGrid.Children.Add(new Label {Text = ClientModel.LegalPersona, HorizontalTextAlignment = TextAlignment.Start}, 0, 0);
 
-            clientDetailsGrid.Children.Add(new Label {Text = "Reg #: " + ClientModel.RegNumber, HorizontalTextAlignment = TextAlignment.Start}, 1, 0);
-            clientDetailsGrid.Children.Add(new Label {Text = ClientModel.ClientCatagory, HorizontalTextAlignment = TextAlignment.Start }, 0, 1);
-            clientDetailsGrid.Children.Add(new Label {Text = "FSP#: " + ClientModel.FspNumber, HorizontalTextAlignment = TextAlignment.Start }, 1, 1);
+            clientDetailsGrid.Children.Add(new Label {Text = "Reg #: " + ClientModel.RegNumber, HorizontalTextAlignment = TextAlignment.Start}, 0, 1);
+            clientDetailsGrid.Children.Add(new Label {Text = ClientModel.ClientCatagory, HorizontalTextAlignment = TextAlignment.Start }, 0, 2);
+            clientDetailsGrid.Children.Add(new Label {Text = "FSP#: " + ClientModel.FspNumber, HorizontalTextAlignment = TextAlignment.Start }, 0, 3);
             clientDetailsGrid.Children.Add(
-                new Label {Text = ClientModel.Risk, HorizontalTextAlignment = TextAlignment.Start}, 0, 2);
+                new Label {Text = ClientModel.Risk, HorizontalTextAlignment = TextAlignment.Start}, 0, 4);
 
 
             stack.Children.Add(screenType);
@@ -59,19 +59,18 @@ namespace CodeFest.Components
             var fundsGrid = new Grid
             {
                 RowDefinitions = new RowDefinitionCollection { new RowDefinition() },
-                ColumnDefinitions = new ColumnDefinitionCollection { new ColumnDefinition(), new ColumnDefinition() }
+                ColumnDefinitions = new ColumnDefinitionCollection { new ColumnDefinition(), new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) } }
             };
 
             var funds = clientModel.FundCounts().OrderBy(f => f.Key).ToArray();
             for (int i = 0; i < funds.Length; i ++)
             {
-                fundsGrid.Children.Add(new Label {Text = funds[i].Key, HorizontalTextAlignment = TextAlignment.Start}, i, 0);
-                fundsGrid.Children.Add(new Label {Text = funds[i].Value.ToString(), HorizontalTextAlignment = TextAlignment.Start}, i, 1);
+                fundsGrid.Children.Add(new Label {Text = funds[i].Key, HorizontalTextAlignment = TextAlignment.Start}, 0, i);
+                fundsGrid.Children.Add(new Label {Text = funds[i].Value.ToString(), HorizontalTextAlignment = TextAlignment.Start}, 1, i);
             }
 
             var fundsFrame = new Frame();
             fundsFrame.OutlineColor = Color.Gray;
-            fundsFrame.Content = clientDetailsGrid;
             fundsFrame.Content = fundsGrid;
 
             stack.Children.Add(fundsFrame);
