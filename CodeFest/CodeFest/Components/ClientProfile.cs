@@ -1,14 +1,18 @@
-﻿using Xamarin.Forms;
+﻿using System.Collections.Generic;
+using CodeFest.Models;
+using Xamarin.Forms;
 
 namespace CodeFest.Components
 {
     internal class ClientProfile : ContentView
     {
         private readonly ClientModel _clientModel;
+        private readonly List<FundModel> _funds;
 
-        public ClientProfile(ClientModel clientModel)
+        public ClientProfile(ClientModel clientModel, List<FundModel> funds)
         {
             _clientModel = clientModel;
+            _funds = funds;
 
             Padding = new Thickness(8, 1);
 
@@ -50,9 +54,13 @@ namespace CodeFest.Components
             var clientDetailsFrame = new Frame();
             clientDetailsFrame.OutlineColor = Color.Gray;
             clientDetailsFrame.Content = clientDetailsGrid;
+//            clientDetailsFrame.BackgroundColor = col
+
             stack.Children.Add(clientDetailsFrame);
 
-            Content = stack;
+            var scroll = new ScrollView();
+            scroll.Content = stack;
+            Content = scroll;
         }
 
         public ClientModel ClientModel
