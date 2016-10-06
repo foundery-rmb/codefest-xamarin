@@ -10,10 +10,8 @@ namespace CodeFest
 {
     public class ResultPage : ContentPage
     {
-        public ResultPage()
+        public ResultPage(ClientModel clientModel)
         {
-            var clientModel = new ClientModel();
-
             Content = new ScrollView
             {
                 Content = new StackLayout

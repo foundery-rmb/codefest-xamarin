@@ -25,7 +25,6 @@ namespace CodeFest.Components
                 VerticalTextAlignment = TextAlignment.Start
             };
 
-            _clientModel = new ClientModel();
             var clientName = new Label
             {
                 Text = ClientModel.ClientName,

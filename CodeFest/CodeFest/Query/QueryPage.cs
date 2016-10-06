@@ -14,9 +14,11 @@ namespace CodeFest.Query
     {
         private Label _label;
         private ActivityIndicator _activityIndicator;
+        private QueryService _queryService;
 
         public QueryPage()
         {
+            _queryService = new QueryService();
             _label = new Label
             {
                 TextColor = Color.Black,
@@ -34,9 +36,9 @@ namespace CodeFest.Query
             speechSearchBar.SearchButtonPressed += async (sender, args) =>
             {
                 _activityIndicator.IsRunning = true;
-                await Task.Delay(500);
+                var data = await _queryService.query(speechSearchBar.Text);
                 _activityIndicator.IsRunning = false;
-                await Navigation.PushAsync(new ResultPage());
+                await Navigation.PushAsync(new ResultPage(data));
             };
             _activityIndicator = new ActivityIndicator();
             Navigation.PushAsync(new ContentPage
@@ -62,7 +64,7 @@ namespace CodeFest.Query
         private async Task ping()
         {
             await Task.Delay(5000);
-            _label.Text = await new PingService().ping();
+            _label.Text = await _queryService.ping();
         }
     }
 }
