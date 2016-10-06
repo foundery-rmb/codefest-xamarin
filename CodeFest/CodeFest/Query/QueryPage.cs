@@ -36,9 +36,9 @@ namespace CodeFest.Query
             speechSearchBar.SearchButtonPressed += async (sender, args) =>
             {
                 _activityIndicator.IsRunning = true;
-                await Task.Delay(500);
+                var data = await _queryService.query(speechSearchBar.Text);
                 _activityIndicator.IsRunning = false;
-                await Navigation.PushAsync(new ResultPage());
+                await Navigation.PushAsync(new ResultPage(data));
             };
             _activityIndicator = new ActivityIndicator();
             Navigation.PushAsync(new ContentPage

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using CodeFest.Components;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace CodeFest
 {
@@ -20,14 +22,18 @@ namespace CodeFest
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<object> query(string text)
+        public async Task<ClientModel> query(string text)
         {
             HttpClient client = new HttpClient
             {
                 BaseAddress = new Uri("http://52.164.230.238:3000")
             };
             var response = await client.GetAsync("query/" + text);
-            return JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
+            var data = JObject.Parse(await response.Content.ReadAsStringAsync());
+            var a = data["clients"] as JArray;
+            var b = a.First();
+            var model = b.ToObject<ClientModel>();
+            return model;
         }
     }
 }
