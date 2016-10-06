@@ -62,16 +62,11 @@ namespace CodeFest.Components
                 ColumnDefinitions = new ColumnDefinitionCollection { new ColumnDefinition(), new ColumnDefinition() }
             };
 
-
-            var funds = _clientModel.Funds;
-            var fundCatagories = _clientModel.FundCounts();
-            for (int i = 0; i < fundCatagories.Keys.Count; i ++)
+            var funds = clientModel.FundCounts().OrderBy(f => f.Key).ToArray();
+            for (int i = 0; i < funds.Length; i ++)
             {
-                var catagory = fundCatagories.Keys.ToArray()[i];
-//                var count = fundCatagories.TryGetValue(catagory, out = 0).ToString();
-
-                fundsGrid.Children.Add(new Label {Text = "Fund Type", HorizontalTextAlignment = TextAlignment.Start}, i, 0);
-                fundsGrid.Children.Add(new Label {Text = "1", HorizontalTextAlignment = TextAlignment.Start}, i, 1);
+                fundsGrid.Children.Add(new Label {Text = funds[i].Key, HorizontalTextAlignment = TextAlignment.Start}, i, 0);
+                fundsGrid.Children.Add(new Label {Text = funds[i].Value.ToString(), HorizontalTextAlignment = TextAlignment.Start}, i, 1);
             }
 
             var fundsFrame = new Frame();
