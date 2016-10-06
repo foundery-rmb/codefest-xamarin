@@ -39,8 +39,6 @@
     <Compile Include="Components\ClientDetailPage.xaml.cs">
       <DependentUpon>ClientDetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\ClientModel.cs" />
-    <Compile Include="ColourScheme.cs" />
     <Compile Include="Models\ClientModel.cs" />
     <Compile Include="Components\ClientProfile.cs" />
     <Compile Include="Components\NativeClientProfile.cs" />

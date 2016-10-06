@@ -33,6 +33,7 @@ namespace CodeFest
             var a = data["clients"] as JArray;
             var b = a.First();
             var model = b.ToObject<ClientModel>();
+            model.Funds.RemoveAll(f => string.IsNullOrEmpty(f.LegalPersonaFund));
             return model;
         }
     }

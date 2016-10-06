@@ -7,12 +7,10 @@ namespace CodeFest.Components
     internal class ClientProfile : ContentView
     {
         private readonly ClientModel _clientModel;
-        private readonly List<FundModel> _funds;
 
-        public ClientProfile(ClientModel clientModel, List<FundModel> funds)
+        public ClientProfile(ClientModel clientModel)
         {
             _clientModel = clientModel;
-            _funds = funds;
 
             Padding = new Thickness(8, 1);
 

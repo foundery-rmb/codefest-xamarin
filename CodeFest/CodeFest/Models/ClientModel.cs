@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using CodeFest.Models;
+using Newtonsoft.Json;
 
 namespace CodeFest.Components
 {
@@ -16,6 +18,8 @@ namespace CodeFest.Components
         public string ClientName;
         [JsonProperty(PropertyName = "Category")]
         public string ClientCatagory;
+
+        public List<FundModel> Funds { get; set; }
 
 
         public ClientModel()
