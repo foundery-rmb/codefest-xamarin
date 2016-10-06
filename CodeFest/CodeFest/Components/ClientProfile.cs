@@ -4,42 +4,60 @@ namespace CodeFest.Components
 {
     internal class ClientProfile : ContentView
     {
-        public ClientProfile()
+        private readonly ClientModel _clientModel;
+
+        public ClientProfile(ClientModel clientModel)
         {
+            _clientModel = clientModel;
+
             Padding = new Thickness(8, 1);
-            var grid = new Grid
+
+            var stack = new StackLayout();
+
+            var screenType = new Label
             {
-                RowDefinitions = new RowDefinitionCollection { new RowDefinition { } },
-                ColumnDefinitions = new ColumnDefinitionCollection { new ColumnDefinition(), new ColumnDefinition() }
+                Text = "Corporate Profile",
+                HorizontalTextAlignment = TextAlignment.Start,
+                VerticalTextAlignment = TextAlignment.Start
             };
-            grid.Children.Add(new Label { Text = "FSP No" }, 0, 0);
-            grid.Children.Add(new Label { Text = "12345", HorizontalTextAlignment = TextAlignment.Center }, 1, 0);
-            grid.Children.Add(new Label { Text = "Risk" }, 0, 1);
-            grid.Children.Add(new Label { Text = "Low", TextColor = Color.Green, HorizontalTextAlignment = TextAlignment.Center }, 1, 1);
-            Content = new Frame
+
+            _clientModel = new ClientModel();
+            var clientName = new Label
             {
-                OutlineColor = Color.Black,
-                HasShadow = true,
-                Content = new StackLayout
-                {
-                    Children =
-                    {
-                        new Label
-                        {
-                            Text = "Allan Gray",
-                            HorizontalTextAlignment = TextAlignment.Center,
-                            FontSize = 30,
-                            FontAttributes = FontAttributes.Bold
-                        },
-                        new Label
-                        {
-                            Text = "Financial Services Provider",
-                            HorizontalTextAlignment = TextAlignment.Center
-                        },
-                        grid
-                    }
-                }
+                Text = ClientModel.ClientName,
+                HorizontalTextAlignment = TextAlignment.Center,
+                FontSize = 30,
+                FontAttributes = FontAttributes.Bold
             };
+
+            var clientDetailsGrid = new Grid
+            {
+                RowDefinitions = new RowDefinitionCollection {new RowDefinition()},
+                ColumnDefinitions = new ColumnDefinitionCollection {new ColumnDefinition(), new ColumnDefinition()}
+            };
+            clientDetailsGrid.Children.Add(new Label {Text = ClientModel.LegalPersona, HorizontalTextAlignment = TextAlignment.Start}, 0, 0);
+
+            clientDetailsGrid.Children.Add(new Label {Text = "Reg #: " + ClientModel.RegNumber, HorizontalTextAlignment = TextAlignment.Start}, 1, 0);
+            clientDetailsGrid.Children.Add(new Label {Text = ClientModel.ClientCatagory, HorizontalTextAlignment = TextAlignment.Start }, 0, 1);
+            clientDetailsGrid.Children.Add(new Label {Text = "FSP#: " + ClientModel.FspNumber, HorizontalTextAlignment = TextAlignment.Start }, 1, 1);
+            clientDetailsGrid.Children.Add(
+                new Label {Text = ClientModel.Risk, HorizontalTextAlignment = TextAlignment.Start}, 0, 2);
+
+
+            stack.Children.Add(screenType);
+            stack.Children.Add(clientName);
+
+            var clientDetailsFrame = new Frame();
+            clientDetailsFrame.OutlineColor = Color.Gray;
+            clientDetailsFrame.Content = clientDetailsGrid;
+            stack.Children.Add(clientDetailsFrame);
+
+            Content = stack;
+        }
+
+        public ClientModel ClientModel
+        {
+            get { return _clientModel; }
         }
     }
 }

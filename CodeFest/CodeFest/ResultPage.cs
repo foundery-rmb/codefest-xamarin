@@ -12,14 +12,15 @@ namespace CodeFest
     {
         public ResultPage()
         {
+            var clientModel = new ClientModel();
+
             Content = new ScrollView
             {
                 Content = new StackLayout
                 {
                     Children =
                     {
-                        new ClientProfile(),
-                        new ClientProfile()
+                        new ClientProfile(clientModel)
                     }
                 }
             };
