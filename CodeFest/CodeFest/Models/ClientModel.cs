@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using CodeFest.Models;
 using Newtonsoft.Json;
 
@@ -21,9 +23,13 @@ namespace CodeFest.Components
 
         public List<FundModel> Funds { get; set; }
 
-
         public ClientModel()
         {
+        }
+
+        public Dictionary<string, int> FundCounts()
+        {
+            return Funds.GroupBy(f => f.LegalPersonaFund).ToDictionary(g => g.Key, g=> g.Count());
         }
     }
 }
