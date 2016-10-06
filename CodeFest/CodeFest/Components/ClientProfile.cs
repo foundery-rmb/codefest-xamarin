@@ -76,13 +76,13 @@ namespace CodeFest.Components
             var funds = clientModel.FundCounts().OrderByDescending(f => f.Value).ToArray();
             var fundTotal = clientModel.FundCounts().Sum(f => f.Value);
 
-            fundsGrid.Children.Add(new Label { Text = "All Funds", HorizontalTextAlignment = TextAlignment.Start, FontAttributes = FontAttributes.Bold}, 0, 1);
+            fundsGrid.Children.Add(new Label { Text = "All Funds", HorizontalTextAlignment = TextAlignment.Start, FontAttributes = FontAttributes.Bold}, 0, 0);
             fundsGrid.Children.Add(new Label { Text = fundTotal.ToString(), HorizontalTextAlignment = TextAlignment.End, FontAttributes = FontAttributes.Bold }, 1, 0);
 
-            for (int i = 1; i < funds.Length+1; i ++)
+            for (int i = 0; i < funds.Length; i ++)
             {
-                fundsGrid.Children.Add(new Label {Text = funds[i].Key, HorizontalTextAlignment = TextAlignment.Start}, 0, i);
-                fundsGrid.Children.Add(new Label {Text = funds[i].Value.ToString(), HorizontalTextAlignment = TextAlignment.End}, 1, i);
+                fundsGrid.Children.Add(new Label {Text = funds[i].Key, HorizontalTextAlignment = TextAlignment.Start}, 0, i+1);
+                fundsGrid.Children.Add(new Label {Text = funds[i].Value.ToString(), HorizontalTextAlignment = TextAlignment.End}, 1, i+1);
             }
 
             var fundsFrame = new Frame();
