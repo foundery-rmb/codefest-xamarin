@@ -12,7 +12,7 @@ namespace CodeFest
         public App()
         {
             // The root page of your application
-            MainPage = new QueryPage();
+            MainPage = new VoiceQueryPage();
         }
 
         protected override void OnStart()

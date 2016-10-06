@@ -47,6 +47,8 @@
     <Compile Include="Models\FundModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\QueryPage.cs" />
+    <Compile Include="Query\VoiceQuery.cs" />
+    <Compile Include="Query\VoiceQueryPage.cs" />
     <Compile Include="ResultPage.cs" />
   </ItemGroup>
   <ItemGroup>
