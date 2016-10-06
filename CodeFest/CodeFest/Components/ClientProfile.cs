@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CodeFest.Models;
 using Xamarin.Forms;
 
@@ -54,6 +55,31 @@ namespace CodeFest.Components
 //            clientDetailsFrame.BackgroundColor = col
 
             stack.Children.Add(clientDetailsFrame);
+
+            var fundsGrid = new Grid
+            {
+                RowDefinitions = new RowDefinitionCollection { new RowDefinition() },
+                ColumnDefinitions = new ColumnDefinitionCollection { new ColumnDefinition(), new ColumnDefinition() }
+            };
+
+
+            var funds = _clientModel.Funds;
+            var fundCatagories = _clientModel.FundCounts();
+            for (int i = 0; i < fundCatagories.Keys.Count; i ++)
+            {
+                var catagory = fundCatagories.Keys.ToArray()[i];
+//                var count = fundCatagories.TryGetValue(catagory, out = 0).ToString();
+
+                fundsGrid.Children.Add(new Label {Text = "Fund Type", HorizontalTextAlignment = TextAlignment.Start}, i, 0);
+                fundsGrid.Children.Add(new Label {Text = "1", HorizontalTextAlignment = TextAlignment.Start}, i, 1);
+            }
+
+            var fundsFrame = new Frame();
+            fundsFrame.OutlineColor = Color.Gray;
+            fundsFrame.Content = clientDetailsGrid;
+            fundsFrame.Content = fundsGrid;
+
+            stack.Children.Add(fundsFrame);
 
             var scroll = new ScrollView();
             scroll.Content = stack;
