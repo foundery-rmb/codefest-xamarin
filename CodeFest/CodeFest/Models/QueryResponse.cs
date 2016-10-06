@@ -9,15 +9,8 @@ namespace CodeFest.Models
 {
     class QueryResponse
     {
-//        public Intent intent;
-
         [JsonProperty(PropertyName = "intent")]
         public string intentName;
     }
 
-//    internal class Intent
-//    {
-//
-//        public string intentName;
-//    }
 }
