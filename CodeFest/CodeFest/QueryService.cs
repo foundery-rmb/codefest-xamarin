@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using CodeFest.Components;
+using CodeFest.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -22,7 +23,7 @@ namespace CodeFest
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<ClientModel> query(string text)
+        public async Task<QueryServiceResponse> query(string text)
         {
             HttpClient client = new HttpClient
             {
@@ -34,7 +35,15 @@ namespace CodeFest
             var b = a.First();
             var model = b.ToObject<ClientModel>();
             model.Funds.RemoveAll(f => string.IsNullOrEmpty(f.LegalPersonaFund));
-            return model;
+
+            var intentResp = data["queryResponse"]["intent"] as JObject;
+            var intentObj = intentResp.ToObject<QueryResponse>();
+
+            var responseObj = new QueryServiceResponse();
+            responseObj.clientModel = model;
+            responseObj.queryResponse = intentObj;
+
+            return responseObj;
         }
     }
 }
