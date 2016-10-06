@@ -14,9 +14,11 @@ namespace CodeFest.Query
     {
         private Label _label;
         private ActivityIndicator _activityIndicator;
+        private QueryService _queryService;
 
         public QueryPage()
         {
+            _queryService = new QueryService();
             _label = new Label
             {
                 TextColor = Color.Black,
@@ -62,7 +64,7 @@ namespace CodeFest.Query
         private async Task ping()
         {
             await Task.Delay(5000);
-            _label.Text = await new PingService().ping();
+            _label.Text = await _queryService.ping();
         }
     }
 }
