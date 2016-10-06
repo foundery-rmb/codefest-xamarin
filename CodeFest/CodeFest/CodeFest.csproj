@@ -39,6 +39,7 @@
     <Compile Include="Components\ClientDetailPage.xaml.cs">
       <DependentUpon>ClientDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\FundList.cs" />
     <Compile Include="Models\ClientModel.cs" />
     <Compile Include="Components\ClientProfile.cs" />
     <Compile Include="Components\NativeClientProfile.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryServiceResponse.cs" />
     <Compile Include="Query\QueryPage.cs" />
+    <Compile Include="FundsPage.cs" />
     <Compile Include="ResultPage.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -43,6 +43,10 @@ namespace CodeFest.Query
                 {
                     await Navigation.PushAsync(new ResultPage(data.clientModel));
                 }
+                else if (data.queryResponse.intentName == "Show Legal Persona")
+                {
+                    await Navigation.PushAsync(new FundsPage(data.clientModel));
+                }
                 
             };
             _activityIndicator = new ActivityIndicator();
