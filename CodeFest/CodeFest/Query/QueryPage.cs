@@ -38,7 +38,12 @@ namespace CodeFest.Query
                 _activityIndicator.IsRunning = true;
                 var data = await _queryService.query(speechSearchBar.Text);
                 _activityIndicator.IsRunning = false;
-                await Navigation.PushAsync(new ResultPage(data));
+
+                if (data.queryResponse.intentName == "Show Client Profile")
+                {
+                    await Navigation.PushAsync(new ResultPage(data.clientModel));
+                }
+                
             };
             _activityIndicator = new ActivityIndicator();
             Navigation.PushAsync(new ContentPage
