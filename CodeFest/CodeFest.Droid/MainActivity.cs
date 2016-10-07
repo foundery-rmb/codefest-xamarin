@@ -9,7 +9,7 @@ using Android.OS;
 
 namespace CodeFest.Droid
 {
-    [Activity(Theme = "@android:style/Theme.AppCompat", Label = "CodeFest", Icon = "@android:color/transparent", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Theme = "@android:style/Theme.Material.Light", Label = "CodeFest", Icon = "@android:color/transparent", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
     {
         protected override void OnCreate(Bundle bundle)

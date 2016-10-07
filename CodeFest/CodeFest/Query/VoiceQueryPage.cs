@@ -12,7 +12,7 @@ namespace CodeFest.Query
     {
         public VoiceQueryPage()
         {
-            Navigation.PushAsync(new ContentPage {Content = new VoiceQuery()});
+            Navigation.PushAsync(new ContentPage {Content = new VoiceQuery(null)});
         }
     }
 }

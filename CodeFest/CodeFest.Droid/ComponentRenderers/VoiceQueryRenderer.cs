@@ -76,8 +76,10 @@ namespace CodeFest.Droid.ComponentRenderers
                     cts.Cancel();
                     audRecorder.Stop();
                     audRecorder.Release();
+                    Element.ActivityIndicator.IsRunning = true;
                     var result = await new SpeechService().RecognizeAsync(Base64.EncodeToString(_data.ToArray(),
                         Base64Flags.NoWrap));
+                    Element.ActivityIndicator.IsRunning = false;
                     _data = new List<byte>(_bufferSizeInBytes);
                     Element.DisplayResult(result);
                 }

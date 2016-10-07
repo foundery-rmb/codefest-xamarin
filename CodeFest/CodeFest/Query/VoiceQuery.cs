@@ -11,6 +11,13 @@ namespace CodeFest.Query
 {
     public class VoiceQuery : View
     {
+        public ActivityIndicator ActivityIndicator;
+
+        public VoiceQuery(ActivityIndicator activityIndicator)
+        {
+            ActivityIndicator = activityIndicator;
+        }
+
         public async Task DisplayResult(QueryServiceResponse data)
         {
             if (data.queryResponse.intentName == "Show Client Profile")
