@@ -8,11 +8,11 @@ using Xamarin.Forms;
 
 namespace CodeFest.Query
 {
-    public class VoiceQueryPage : ContentPage
+    public class VoiceQueryPage : NavigationPage
     {
         public VoiceQueryPage()
         {
-            Content = new VoiceQuery();
+            Navigation.PushAsync(new ContentPage {Content = new VoiceQuery()});
         }
     }
 }

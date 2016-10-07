@@ -1,17 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
+using System.Threading;
+using System.Threading.Tasks;
 using Android.Content;
 using Android.Media;
-using Android.OS;
-using Android.Runtime;
 using Android.Util;
-using Android.Views;
 using Android.Widget;
-using CodeFest.Droid;
 using CodeFest.Droid.ComponentRenderers;
 using CodeFest.Query;
 using Xamarin.Forms;
@@ -19,129 +13,108 @@ using Xamarin.Forms.Platform.Android;
 using Button = Android.Widget.Button;
 
 [assembly: ExportRenderer(typeof(VoiceQuery), typeof(VoiceQueryRenderer))]
+
 namespace CodeFest.Droid.ComponentRenderers
 {
-    class VoiceQueryRenderer : ViewRenderer<VoiceQuery, LinearLayout>
+    internal class VoiceQueryRenderer : ViewRenderer<VoiceQuery, LinearLayout>
     {
-        private static String mFileName = null;
-        private static String LOG_TAG = "AudioRecordTest";
+        private static readonly string LOG_TAG = "AudioRecordTest";
+        private int _bufferSizeInBytes;
+        private List<byte> _data;
+        private bool _recording;
+
+        private AudioRecord audRecorder;
+        private CancellationTokenSource cts;
 
         private Button mRecordButton;
-        private MediaRecorder mRecorder = null;
 
-        private Button mPlayButton;
-        private MediaPlayer mPlayer = null;
-
-        bool mStartRecording = true;
-        bool mStartPlaying;
         protected override void OnElementChanged(ElementChangedEventArgs<VoiceQuery> e)
         {
-            LinearLayout ll = new LinearLayout(Context);
+            _bufferSizeInBytes = AudioRecord.GetMinBufferSize(16000,
+                ChannelIn.Mono,
+                Encoding.Pcm16bit);
+            _data = new List<byte>(_bufferSizeInBytes*10);
+
+            var ll = new LinearLayout(Context);
             mRecordButton = new Button(Context)
             {
                 Text = "Start Recording"
             };
             ll.AddView(mRecordButton,
                 new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WrapContent,
-                    ViewGroup.LayoutParams.WrapContent,
-                    0));
-            mPlayButton = new Button(Context)
-            {
-                Text = "Start Playing"
-            };
-            ll.AddView(mPlayButton,
-                new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WrapContent,
-                    ViewGroup.LayoutParams.WrapContent,
+                    LayoutParams.WrapContent,
+                    LayoutParams.WrapContent,
                     0));
 
-            mRecordButton.Click += (sender, args) =>
+            mRecordButton.Click += async (sender, args) =>
             {
-                onRecord(mStartRecording);
-                mRecordButton.Text = mStartRecording ? "Stop recording" : "Start recording";
-                mStartRecording = !mStartRecording;
-            };
+                if (!_recording)
+                {
+                    _recording = true;
+                    cts = new CancellationTokenSource();
 
-            mPlayButton.Click += (sender, args) =>
-            {
-                onPlay(mStartPlaying);
-                mPlayButton.Text = mStartPlaying ? "Stop playing" : "Start playing";
-                mStartPlaying = !mStartPlaying;
+                    try
+                    {
+                        mRecordButton.Text = "Stop Recording";
+                        await RecordAudioAndSend(cts.Token);
+                    }
+                    catch (OperationApplicationException)
+                    {
+                        audRecorder.Stop();
+                        audRecorder.Release();
+                    }
+                    catch (Exception)
+                    {
+                        audRecorder.Stop();
+                        audRecorder.Release();
+                    }
+                }
+                else
+                {
+                    _recording = false;
+                    mRecordButton.Text = "Start Recording";
+                    cts.Cancel();
+                    audRecorder.Stop();
+                    audRecorder.Release();
+                    var result = await new SpeechService().RecognizeAsync(Base64.EncodeToString(_data.ToArray(),
+                        Base64Flags.NoWrap));
+                    Element.DisplayResult(result);
+                }
             };
             SetNativeControl(ll);
         }
 
-        private void onRecord(bool start)
+        public async Task RecordAudioAndSend(CancellationToken ct)
         {
-            if (start)
-            {
-                startRecording();
-            }
-            else
-            {
-                stopRecording();
-            }
-        }
+            var audioBuffer = new byte[_bufferSizeInBytes];
 
-        private void onPlay(bool start)
-        {
-            if (start)
-            {
-                startPlaying();
-            }
-            else
-            {
-                stopPlaying();
-            }
-        }
 
-        private void startPlaying()
-        {
-            mPlayer = new MediaPlayer();
-            try
+            audRecorder = new AudioRecord(AudioSource.Mic,
+                16000,
+                ChannelIn.Mono,
+                Encoding.Pcm16bit,
+                _bufferSizeInBytes);
+
+            // You might need to slow things down to have a chance to cancel.
+            await Task.Delay(41, ct);
+
+            await Task.Run(() =>
             {
-                mPlayer.SetDataSource(mFileName);
-                mPlayer.Prepare();
-                mPlayer.Start();
-            }
-            catch (Exception e)
-            {
-                Log.Error(LOG_TAG, "prepare() failed");
-            }
-        }
-
-        private void stopPlaying()
-        {
-            mPlayer.Release();
-            mPlayer = null;
-        }
-
-        private void startRecording()
-        {
-            mRecorder = new MediaRecorder();
-            mRecorder.SetAudioSource(AudioSource.Mic);
-            mRecorder.SetOutputFormat(OutputFormat.ThreeGpp);
-            mRecorder.SetOutputFile(mFileName);
-            mRecorder.SetAudioEncoder(AudioEncoder.AmrNb);
-
-            try
-            {
-                mRecorder.Prepare();
-            }
-            catch (Exception e)
-            {
-                Log.Error(LOG_TAG, "prepare() failed");
-            }
-
-            mRecorder.Start();
-        }
-
-        private void stopRecording()
-        {
-            mRecorder.Stop();
-            mRecorder.Release();
-            mRecorder = null;
+                audRecorder.StartRecording();
+                while (!cts.IsCancellationRequested)
+                    try
+                    {
+                        //get current timestamp
+                        // Keep reading the buffer while there is audio input.
+                        audRecorder.Read(audioBuffer, 0, audioBuffer.Length);
+                        _data.AddRange(audioBuffer);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.Out.WriteLine(ex.Message);
+                        break;
+                    }
+            }, ct);
         }
     }
 }

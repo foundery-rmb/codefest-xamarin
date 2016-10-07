@@ -8,7 +8,7 @@ using CodeFest.Models;
 
 namespace CodeFest
 {
-    class QueryServiceResponse
+    public class QueryServiceResponse
     {
         public QueryResponse queryResponse;
         public ClientModel clientModel;

@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace CodeFest.Models
 {
-    class QueryResponse
+    public class QueryResponse
     {
         [JsonProperty(PropertyName = "intent")]
         public string intentName;
