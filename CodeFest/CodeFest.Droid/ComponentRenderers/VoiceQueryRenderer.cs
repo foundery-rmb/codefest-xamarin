@@ -4,9 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.Media;
-using Android.Support.Design.Widget;
 using Android.Util;
-using Android.Views;
 using Android.Widget;
 using CodeFest.Droid.ComponentRenderers;
 using CodeFest.Query;
@@ -28,7 +26,7 @@ namespace CodeFest.Droid.ComponentRenderers
         private AudioRecord audRecorder;
         private CancellationTokenSource cts;
 
-        private FloatingActionButton mRecordButton;
+        private Button mRecordButton;
 
         protected override void OnElementChanged(ElementChangedEventArgs<VoiceQuery> e)
         {
@@ -38,8 +36,10 @@ namespace CodeFest.Droid.ComponentRenderers
             _data = new List<byte>(_bufferSizeInBytes*10);
 
             var ll = new LinearLayout(Context);
-            mRecordButton = (FloatingActionButton) LayoutInflater.From(Forms.Context).Inflate(Resource.Layout.VoiceQuery, null, false);
-
+            mRecordButton = new Button(Context)
+            {
+                Text = "Start Recording"
+            };
             ll.AddView(mRecordButton,
                 new LinearLayout.LayoutParams(
                     LayoutParams.WrapContent,
@@ -55,6 +55,7 @@ namespace CodeFest.Droid.ComponentRenderers
 
                     try
                     {
+                        mRecordButton.Text = "Stop Recording";
                         await RecordAudioAndSend(cts.Token);
                     }
                     catch (OperationApplicationException)
@@ -71,6 +72,7 @@ namespace CodeFest.Droid.ComponentRenderers
                 else
                 {
                     _recording = false;
+                    mRecordButton.Text = "Start Recording";
                     cts.Cancel();
                     audRecorder.Stop();
                     audRecorder.Release();
