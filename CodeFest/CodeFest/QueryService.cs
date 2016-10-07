@@ -32,9 +32,20 @@ namespace CodeFest
             var response = await client.GetAsync("query/" + text);
             var data = JObject.Parse(await response.Content.ReadAsStringAsync());
             var a = data["clients"] as JArray;
-            var b = a.First();
-            var model = b.ToObject<ClientModel>();
-            model.Funds.RemoveAll(f => string.IsNullOrEmpty(f.LegalPersonaFund));
+
+            JToken b;
+            ClientModel model;
+            if (a.HasValues)
+            {
+                b = a.First;
+                model = b.ToObject<ClientModel>();
+                model.Funds.RemoveAll(f => string.IsNullOrEmpty(f.LegalPersonaFund));
+            }
+            else
+            {
+                model = new ClientModel();
+                model.ClientName = "No Data";
+            }
 
             var intentResp = data["queryResponse"]["intent"] as JObject;
             var intentObj = intentResp.ToObject<QueryResponse>();

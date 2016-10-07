@@ -64,7 +64,6 @@ namespace CodeFest.Components
             var clientDetailsFrame = new Frame();
             clientDetailsFrame.OutlineColor = Color.Gray;
             clientDetailsFrame.Content = clientDetailsGrid;
-//            clientDetailsFrame.BackgroundColor = col
 
             stack.Children.Add(clientDetailsFrame);
 
@@ -74,11 +73,16 @@ namespace CodeFest.Components
                 ColumnDefinitions = new ColumnDefinitionCollection { new ColumnDefinition(), new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) } }
             };
 
-            var funds = clientModel.FundCounts().OrderBy(f => f.Key).ToArray();
+            var funds = clientModel.FundCounts().OrderByDescending(f => f.Value).ToArray();
+            var fundTotal = clientModel.FundCounts().Sum(f => f.Value);
+
+            fundsGrid.Children.Add(new Label { Text = "All Funds", HorizontalTextAlignment = TextAlignment.Start, FontAttributes = FontAttributes.Bold}, 0, 0);
+            fundsGrid.Children.Add(new Label { Text = fundTotal.ToString(), HorizontalTextAlignment = TextAlignment.End, FontAttributes = FontAttributes.Bold }, 1, 0);
+
             for (int i = 0; i < funds.Length; i ++)
             {
-                fundsGrid.Children.Add(new Label {Text = funds[i].Key, HorizontalTextAlignment = TextAlignment.Start}, 0, i);
-                fundsGrid.Children.Add(new Label {Text = funds[i].Value.ToString(), HorizontalTextAlignment = TextAlignment.End}, 1, i);
+                fundsGrid.Children.Add(new Label {Text = funds[i].Key, HorizontalTextAlignment = TextAlignment.Start}, 0, i+1);
+                fundsGrid.Children.Add(new Label {Text = funds[i].Value.ToString(), HorizontalTextAlignment = TextAlignment.End}, 1, i+1);
             }
 
             var fundsFrame = new Frame();
