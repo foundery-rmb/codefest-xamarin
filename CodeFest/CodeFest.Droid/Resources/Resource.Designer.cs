@@ -3420,6 +3420,12 @@ namespace CodeFest.Droid
 			// aapt resource value: 0x7f060010
 			public const int abc_text_size_title_material_toolbar = 2131099664;
 			
+			// aapt resource value: 0x7f060079
+			public const int activity_horizontal_margin = 2131099769;
+			
+			// aapt resource value: 0x7f06007a
+			public const int activity_vertical_margin = 2131099770;
+			
 			// aapt resource value: 0x7f060074
 			public const int calendar_day_headers_paddingbottom = 2131099764;
 			
@@ -3536,6 +3542,9 @@ namespace CodeFest.Droid
 			
 			// aapt resource value: 0x7f060050
 			public const int disabled_alpha_material_light = 2131099728;
+			
+			// aapt resource value: 0x7f06007b
+			public const int fab_margin = 2131099771;
 			
 			// aapt resource value: 0x7f060051
 			public const int highlight_alpha_material_colored = 2131099729;
@@ -4259,6 +4268,9 @@ namespace CodeFest.Droid
 			// aapt resource value: 0x7f070051
 			public const int expanded_menu = 2131165265;
 			
+			// aapt resource value: 0x7f07009f
+			public const int fab = 2131165343;
+			
 			// aapt resource value: 0x7f070035
 			public const int fill = 2131165237;
 			
@@ -4839,7 +4851,10 @@ namespace CodeFest.Droid
 			public const int support_simple_spinner_dropdown_item = 2130903101;
 			
 			// aapt resource value: 0x7f03003e
-			public const int week = 2130903102;
+			public const int VoiceQuery = 2130903102;
+			
+			// aapt resource value: 0x7f03003f
+			public const int week = 2130903103;
 			
 			static Layout()
 			{

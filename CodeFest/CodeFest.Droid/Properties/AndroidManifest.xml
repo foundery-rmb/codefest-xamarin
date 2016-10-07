@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="15" />
-	<application android:label="$safeprojectname$"></application>
-  <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
-  <uses-permission-sdk-23 android:name="android.permission.RECORD_AUDIO"></uses-permission-sdk-23>
+	<uses-sdk android:minSdkVersion="22" />
+	<application android:label="CodeFest"></application>
+	<uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
+	<uses-permission-sdk-23 android:name="android.permission.RECORD_AUDIO"></uses-permission-sdk-23>
 </manifest>

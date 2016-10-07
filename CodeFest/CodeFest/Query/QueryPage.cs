@@ -58,6 +58,7 @@ namespace CodeFest.Query
                     {
                         _label,
                         speechSearchBar,
+                        new VoiceQuery(),
                         _activityIndicator
                     }
                 }

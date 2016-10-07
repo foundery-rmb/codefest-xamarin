@@ -15,7 +15,7 @@ namespace CodeFest
         {
             var client = new HttpClient
             {
-                BaseAddress = new Uri("http://10.4.240.102:3000")
+                BaseAddress = new Uri("http://52.164.230.238:3000")
             };
 
             var body = new JObject
